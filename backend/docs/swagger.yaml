@@ -1,22 +1,28 @@
 openapi: 3.0.0
 info:
   title: Spotplay
-  description: 'Es una plataforma de musica y mas ...'
+  description: 'Es una plataforma de musica, puedes estar al tanto de las nuevas canciones de tus artistas favoritos, Crea una cuenta con nosotros para publicar tus canciones o para escuchar las canciones favoritas de tus artistas'
   contact:
-    email: suport@spotplay.com
+    email: axelgolin4@gmail.com
   license:
     name: Apache 2.0
-    url: http://apac.....
+    url: http://apache.com
   version: 1.0.0
 servers:
 - url: http://localhost:4000/api/v1
 tags:
 - name: Song
-  description: canciones de la aplicacion
+  description: Canciones de la aplicacion
 - name: User
-  description: usuarios de la plataforma
-- name: Playlist
-  description: playlist de usuarios
+  description: Usuarios de la plataforma
+- name: PlayList
+  description: Playlist de usuarios
+- name: Artista
+  description: Son todos los artistas de la plataforma
+- name: Genero
+  description: Son todos los generos de las canciones
+- name: Album
+  description: Son todos los album de nuestra plataforma
 components:
   schemas:
     Song:
@@ -54,7 +60,175 @@ components:
           type: string
         password:
           type: string
+    Album:
+      type: object
+      properties:
+        id: 
+          type: integer
+          format: int64
+        name:
+          type: string
+        date:
+          type: string
+        cover:
+          type: string
+    Artist:
+      type: object
+      properties:
+        id: 
+          type: integer
+          format: int64
+        name:
+          type: string
+        lastName:
+          type: string
+        img:
+          type: string
+    Genre:
+      type: object
+      properties:
+        id: 
+          type: integer
+          format: int64
+        name:
+          type: string
+    PlayList:
+      type: object
+      properties:
+        id: 
+          type: integer
+          format: int64
+        name:
+          type: string
+        cover:
+          type: string
+    Album:
+      type: object
+      properties:
+        id: 
+          type: integer
+          format: int64
+        name:
+          type: string
+        date:
+          type: string
+        cover:
+          type: string
+    Role:
+      type: object
+      properties:
+        id: 
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        editor:
+          type: bool
+    
 paths:
+  /song:
+    post:
+      tags:
+      - Song
+      summary: Crea una cancion nueva.
+      operationId: createSong
+      description: Se crea una nueva cancion.
+      requestBody:
+        description: Ingrese los datos de la cancion a registrar.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Song'
+        required: true
+      responses: 
+        200: 
+          description: Registro exitoso
+          content:
+              application/json:
+                schema: 
+                  $ref: '#/components/schemas/Song'
+        400:
+          description: bad request
+          content: {}
+        404:
+          description:  Not found
+          content: {}
+    x-codegen-request-body-name: body
+    get:
+      tags:
+      - Song
+      summary: Obtiene todas las canciones publicadas
+      operationId: getAllSongs
+      description: Se obtiene todas las canciones publicadas
+      responses:
+        200:
+          description: Obtencion de las canciones con exito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Song'
+        400:
+          description: bad request
+          content: {}
+        404:
+          description:  Not found
+          content: {}
+    delete:
+      tags:
+      - Song
+      summary: Eliminar una cancion.
+      operationId: deleteSong
+      description: Se elimina una cancion.
+      requestBody:
+        description: Ingrese la cancion que se eliminara.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Song'
+        required: true
+      responses: 
+        200: 
+          description: Registro exitoso
+          content:
+              application/json:
+                schema: 
+                  $ref: '#/components/schemas/Song'
+        400:
+          description: bad request
+          content: {}
+        404:
+          description:  Not found
+          content: {}
+    x-codegen-request-body-name: body
+    put:
+      tags:
+      - Song
+      summary: Editar una cancion.
+      operationId: updateSong
+      description: Se editara una cancion.
+      requestBody:
+        description: Ingrese la cancion que se editara.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Song'
+        required: true
+      responses: 
+        200: 
+          description: Registro exitoso
+          content:
+              application/json:
+                schema: 
+                  $ref: '#/components/schemas/Song'
+        400:
+          description: bad request
+          content: {}
+        404:
+          description:  Not found
+          content: {}
+    x-codegen-request-body-name: body
   /user/singup:
     post:
       tags:
@@ -84,5 +258,409 @@ paths:
           content: {}
         404:
           description: not found
+          content: {}
+    x-codegen-request-body-name: body
+  /PlayList:
+    post:
+      tags:
+      - PlayList
+      summary: Crea una PlayList nueva.
+      operationId: createNewPlayList
+      description: Endpoint sirve para la creacion de nuevas canciones, unicamente por usuarios editores.
+      requestBody:
+        description: Ingrese los datos de la PlayList a registrar.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlayList'
+        required: true
+      responses: 
+        200: 
+          description: Registro exitoso
+          content:
+              application/json:
+                schema: 
+                  $ref: '#/components/schemas/PlayList'
+        400:
+          description: bad request
+          content: {}
+        404:
+          description:  Not found
+          content: {}
+    x-codegen-request-body-name: body
+    get:
+      tags:
+      - PlayList
+      summary: Obtiene todas las PlayList publicadas
+      operationId: getAllPlayList
+      description: Se optienen todas las PlayList publicadas
+      responses:
+        200:
+          description: Obtencion de las PlayList con exito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayList'
+        400:
+          description: bad request
+          content: {}
+        404:
+          description:  Not found
+          content: {}
+    delete:
+      tags:
+      - PlayList
+      summary: Eliminar una PlayList.
+      operationId: deletePlayList
+      description: Se elimina una PlayList.
+      requestBody:
+        description: Ingrese la PlayList que se eliminara.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlayList'
+        required: true
+      responses: 
+        200: 
+          description: Registro exitoso
+          content:
+              application/json:
+                schema: 
+                  $ref: '#/components/schemas/PlayList'
+        400:
+          description: bad request
+          content: {}
+        404:
+          description:  Not found
+          content: {}
+    x-codegen-request-body-name: body
+    put:
+      tags:
+      - PlayList
+      summary: Editar una PlayList.
+      operationId: updatePlayList
+      description: Se editara una PlayList.
+      requestBody:
+        description: Ingrese la PlayList que se editara.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlayList'
+        required: true
+      responses: 
+        200: 
+          description: Registro exitoso
+          content:
+              application/json:
+                schema: 
+                  $ref: '#/components/schemas/PlayList'
+        400:
+          description: bad request
+          content: {}
+        404:
+          description:  Not found
+          content: {}
+    x-codegen-request-body-name: body
+  /Album:
+    post:
+      tags:
+      - Album
+      summary: Crea un nuevo album
+      operationId: createNewAlbum
+      description: Se creaun los nuevos album con canciones.
+      requestBody:
+        description: Ingrese los datos del Album a registrar.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Album'
+        required: true
+      responses: 
+        200: 
+          description: Registro exitoso
+          content:
+              application/json:
+                schema: 
+                  $ref: '#/components/schemas/Album'
+        400:
+          description: bad request
+          content: {}
+        404:
+          description:  Not found
+          content: {}
+    x-codegen-request-body-name: body
+    get:
+      tags:
+      - Album
+      summary: Obtiene todas los Album publicados
+      operationId: getAllAlbum
+      description: Se obtienen todas los Album publicadas
+      responses:
+        200:
+          description: Obtencion de los Album con exito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Album'
+        400:
+          description: bad request
+          content: {}
+        404:
+          description:  Not found
+          content: {}
+    delete:
+      tags:
+      - Album
+      summary: Eliminar una Album.
+      operationId: deleteAlbum
+      description: Se elimina una Album.
+      requestBody:
+        description: Ingrese la Album que se eliminara.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Album'
+        required: true
+      responses: 
+        200: 
+          description: Registro exitoso
+          content:
+              application/json:
+                schema: 
+                  $ref: '#/components/schemas/Album'
+        400:
+          description: bad request
+          content: {}
+        404:
+          description:  Not found
+          content: {}
+    x-codegen-request-body-name: body
+    put:
+      tags:
+      - Album
+      summary: Editar una Album.
+      operationId: updateAlbum
+      description: Se editara una Album.
+      requestBody:
+        description: Ingrese la Album que se editara.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Album'
+        required: true
+      responses: 
+        200: 
+          description: Registro exitoso
+          content:
+              application/json:
+                schema: 
+                  $ref: '#/components/schemas/Album'
+        400:
+          description: bad request
+          content: {}
+        404:
+          description:  Not found
+          content: {}
+    x-codegen-request-body-name: body
+  /Artist:
+    post:
+      tags:
+      - Artista
+      summary: Crea un Artista nuevo.
+      operationId: createNewArtist
+      description: Creacion de registro de nuevos artistas.
+      requestBody:
+        description: Ingrese los datos del Artista a registrar.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Artist'
+        required: true
+      responses: 
+        200: 
+          description: Registro exitoso
+          content:
+              application/json:
+                schema: 
+                  $ref: '#/components/schemas/Artist'
+        400:
+          description: bad request
+          content: {}
+        404:
+          description:  Not found
+          content: {}
+    x-codegen-request-body-name: body
+    get:
+      tags:
+      - Artista
+      summary: Obtiene todos los artistas publicadas
+      operationId: getAllArtist
+      description: Se obtienen todos los Artistas publicadas
+      responses:
+        200:
+          description: Obtencion de los Artistas con exito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Artist'
+        400:
+          description: bad request
+          content: {}
+        404:
+          description:  Not found
+          content: {}
+    delete:
+      tags:
+      - Artista
+      summary: Eliminar una Artista.
+      operationId: deleteArtist
+      description: Se elimina una Artista.
+      requestBody:
+        description: Ingrese el Artista que se eliminara.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Artist'
+        required: true
+      responses: 
+        200: 
+          description: Registro exitoso
+          content:
+              application/json:
+                schema: 
+                  $ref: '#/components/schemas/Artist'
+        400:
+          description: bad request
+          content: {}
+        404:
+          description:  Not found
+          content: {}
+    x-codegen-request-body-name: body
+    put:
+      tags:
+      - Artista
+      summary: Editar una Artist.
+      operationId: updateArtist
+      description: Se editara una Artista.
+      requestBody:
+        description: Ingrese la Artista que se editara.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Artist'
+        required: true
+      responses: 
+        200: 
+          description: Registro exitoso
+          content:
+              application/json:
+                schema: 
+                  $ref: '#/components/schemas/Artist'
+        400:
+          description: bad request
+          content: {}
+        404:
+          description:  Not found
+          content: {}
+    x-codegen-request-body-name: body
+  /Genre:
+    post:
+      tags:
+      - Genero
+      summary: Crea un Genero nuevo.
+      operationId: createNewGenre
+      description: Creacion de registro de nuevos generos.
+      requestBody:
+        description: Ingrese los datos del Genero a registrar.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Genre'
+        required: true
+      responses: 
+        200: 
+          description: Registro exitoso
+          content:
+              application/json:
+                schema: 
+                  $ref: '#/components/schemas/Genre'
+        400:
+          description: bad request
+          content: {}
+        404:
+          description:  Not found
+          content: {}
+    x-codegen-request-body-name: body
+    get:
+      tags:
+      - Genero
+      summary: Obtiene todos los Generos publicados
+      operationId: getAllGenre
+      description: Se obtienen todos los Generos publicados
+      responses:
+        200:
+          description: Obtencion de los Generos con exito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Genre'
+        400:
+          description: bad request
+          content: {}
+        404:
+          description:  Not found
+          content: {}
+    delete:
+      tags:
+      - Genero
+      summary: Eliminar un Genero.
+      operationId: deleteGenre
+      description: Se elimina un Genero.
+      requestBody:
+        description: Ingrese el Genero que se eliminara.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Genre'
+        required: true
+      responses: 
+        200: 
+          description: Registro exitoso
+          content:
+              application/json:
+                schema: 
+                  $ref: '#/components/schemas/Genre'
+        400:
+          description: bad request
+          content: {}
+        404:
+          description:  Not found
+          content: {}
+    x-codegen-request-body-name: body
+    put:
+      tags:
+      - Genero
+      summary: Editar un Genero.
+      operationId: updateGenre
+      description: Se editara un Genero.
+      requestBody:
+        description: Ingrese el Genero que se editara.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Genre'
+        required: true
+      responses: 
+        200: 
+          description: Registro exitoso
+          content:
+              application/json:
+                schema: 
+                  $ref: '#/components/schemas/Genre'
+        400:
+          description: bad request
+          content: {}
+        404:
+          description:  Not found
           content: {}
     x-codegen-request-body-name: body

@@ -31,11 +31,6 @@ class SongController {
     const respose = this._service.deleteItemTable('song', '_id', song.id)
     return respose
   }
-
-  getOneSong (song) {
-    const response = this._service.findByAtribute('song', '_id', song.id)
-    return response
-  }
 }
 
 export default SongController
