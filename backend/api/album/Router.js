@@ -14,25 +14,25 @@ class AlbumRouter {
     this._router.delete('/', this.handleDeleteAlbum.bind(this))
   }
 
-  handlePostAlbum (req, res) {
+  async handlePostAlbum (req, res) {
     const album = req.body
     console.log(album)
     const result = this._ctrl.createNewAlbum(album)
     this._response.succes(req, res, result, this._httpcode.CREATED)
   }
 
-  handleGetAllAlbum (req, res) {
+  async handleGetAllAlbum (req, res) {
     const result = this._ctrl.getAllAlbum()
     this._response.succes(req, res, result, this._httpcode.OK)
   }
 
-  handleUpdateAlbum (req, res) {
+  async handleUpdateAlbum (req, res) {
     const album = req.body
     const result = this._ctrl.updateAlbum(album)
     this._response.succes(req, res, result, this._httpcode.OK)
   }
 
-  handleDeleteAlbum (req, res) {
+  async handleDeleteAlbum (req, res) {
     const album = req.body
     const result = this._ctrl.deleteAlbum(album)
     this._response.succes(req, res, result, this._httpcode.OK)

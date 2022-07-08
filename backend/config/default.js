@@ -13,5 +13,16 @@ export const config = {
   },
   jwt: {
     secret: process.env.JWT_SECRET || 'secret'
+  },
+  mongo: {
+    uri: process.env.MONGO_URI
+  },
+  table: {
+    user: 'Users',
+    song: 'Songs',
+    auth: 'Auth',
+    playlist: 'Playlists',
+    artist: 'Artists',
+    album: 'Albums'
   }
 }

@@ -7,31 +7,31 @@ class SongRouter {
     this.registerRoutes()
   }
 
-  registerRoutes () {
+  async registerRoutes () {
     this._router.post('/', this.handlePostSong.bind(this))
     this._router.get('/', this.handleGetSong.bind(this))
     this._router.put('/', this.handleUpdateSong.bind(this))
     this._router.delete('/', this.handleDeleteSong.bind(this))
   }
 
-  handlePostSong (req, res) {
+  async handlePostSong (req, res) {
     const song = req.body
     const result = this._ctrl.createNewSong(song)
     this._response.succes(req, res, result, this._httpcode.CREATED)
   }
 
-  handleGetSong (req, res) {
+  async handleGetSong (req, res) {
     const result = this._ctrl.getAllSong()
     this._response.succes(req, res, result, this._httpcode.OK)
   }
 
-  handleUpdateSong (req, res) {
+  async handleUpdateSong (req, res) {
     const song = req.body
     const result = this._ctrl.updateSong(song)
     this._response.succes(req, res, result, this._httpcode.OK)
   }
 
-  handleDeleteSong (req, res) {
+  async handleDeleteSong (req, res) {
     const song = req.body
     const result = this._ctrl.deleteSong(song)
     this._response.succes(req, res, result, this._httpcode.OK)

@@ -6,19 +6,19 @@ class SongController {
     this._entiy = song
   }
 
-  getAllSong () {
+  async getAllSong () {
     const response = this._service.getAllTable('song')
     return response
   }
 
-  createNewSong (song) {
+  async createNewSong (song) {
     const newSong = new this._entiy(song)
     console.log(newSong)
     const respose = this._service.save('song', newSong)
     return respose
   }
 
-  updateSong (song) {
+  async updateSong (song) {
     const newSong = new this._entiy(song)
     newSong.setId(song.id)
     console.log('Controller LOG')
@@ -27,7 +27,7 @@ class SongController {
     return respose
   }
 
-  deleteSong (song) {
+  async deleteSong (song) {
     const respose = this._service.deleteItemTable('song', '_id', song.id)
     return respose
   }
